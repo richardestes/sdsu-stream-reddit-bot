@@ -3,6 +3,7 @@ import re
 import time
 import requests
 import getpass
+import string
 from security import encrypt_password, check_encrypted_password
 from sports import check_if_game_today
 
@@ -73,9 +74,17 @@ for submission in subreddit.stream.submissions():
         print("Submission found. Replying with link...")
         game_title = reddit_team_name_left + "vs " + reddit_team_name_right
         print(game_title)
-        reply_text = "**HD** | [" + game_title + "](https://www.viprow.net/sports-basketball-online) | Clicks: 2 | English | Disable Adblock"
+        reddit_team_left_formatted = reddit_team_name_left.translate(str.maketrans('', '', string.punctuation))
+        reddit_team_name_left_link = reddit_team_left_formatted.lower().strip().lstrip().replace(' ', '-')
+        print(reddit_team_name_left_link)
+        reddit_team_right_formatted = reddit_team_name_right.translate(str.maketrans('','', string.punctuation))
+        reddit_team_name_right_link = reddit_team_right_formatted.lower().strip().lstrip().replace(' ', '-')
+        
+        game_link = reddit_team_name_left_link + "-vs-" + reddit_team_name_right_link + "-1-online-stream"
+        print(game_link)
+        reply_text = "**HD** | [" + game_title + "](https://www.viprow.net/" + game_link +") | Clicks: 2 | English | Disable Adblock"
         print(reply_text)
-        submission.reply(reply_text)
+        # submission.reply(reply_text)
         break
     else:
         continue
