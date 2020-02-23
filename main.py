@@ -73,7 +73,7 @@ for submission in subreddit.stream.submissions():
         print("Submission found. Replying with link...")
         game_title = reddit_team_name_left + "vs " + reddit_team_name_right
         print(game_title)
-        reply_text = "**HD** | [" + game_title + "](https://www.viprow.net/sports-basketball-online) | Clicks: 2 | English | Mobile : Yes"
+        reply_text = "**HD** | [" + game_title + "](https://www.viprow.net/sports-basketball-online) | Clicks: 2 | English | Disable Adblock"
         print(reply_text)
         submission.reply(reply_text)
         break
