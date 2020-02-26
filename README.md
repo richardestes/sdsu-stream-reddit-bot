@@ -13,3 +13,6 @@ https://docs.python.org/3.8/library/getpass.html
 # sportsreference: python sports api
 
 https://sportsreference.readthedocs.io/en/stable/index.html
+
+# Where is the bot hosted?
+Going to eventually upload to AWS Lambda but until then it's on a server hosted by pythonanywhere.com
