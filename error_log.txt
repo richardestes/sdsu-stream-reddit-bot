@@ -1,0 +1,16 @@
+ERROR:root:local variable 'reddit' referenced before assignment
+ERROR:root:%d format: a number is required, not str
+ERROR:root:RATELIMIT: 'you are doing that too much. try again in 7 minutes.' on field 'ratelimit'
+ERROR:root:%d format: a number is required, not str
+ERROR:root:'>' not supported between instances of 'str' and 'int'
+ERROR:root:%d format: a number is required, not str
+ERROR:root:invalid_grant error processing request
+ERROR:root:%d format: a number is required, not str
+ERROR:root:%d format: a number is required, not str
+ERROR:root:'NoneType' object is not an iterator
+ERROR:root:%d format: a number is required, not str
+ERROR:root:%d format: a number is required, not str
+ERROR:root:name 'tmpInt' is not defined
+ERROR:root:local variable 'tmpInt' referenced before assignment
+ERROR:root:Value 11 is out of range, should be between 0 and 10
+ERROR:root:invalid_grant error processing request

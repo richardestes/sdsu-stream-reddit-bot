@@ -7,6 +7,7 @@ import datetime
 #     print(team.name, team.abbreviation)
 
 def check_if_game_today():
+    game_today_bool = False
     now = datetime.datetime.now()
     # date_time = now.strftime("%Y-%m-%d %H:%M:%S")
     now_date_time = now.strftime("%Y-%m-%d")
@@ -27,6 +28,9 @@ def check_if_game_today():
             print(game_date)
             print(game_hour_pst)
             print(game.opponent_name)
+            game_today_bool = True
+            break
+    return game_today_bool
 
 
 

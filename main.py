@@ -4,6 +4,9 @@ import time
 import requests
 import getpass
 import string
+import logging
+import math
+import progressbar
 from security import encrypt_password, check_encrypted_password
 from sports import check_if_game_today
 
@@ -11,80 +14,118 @@ from sports import check_if_game_today
 # botname = input("Enter bot user name: (sdsu-stream-bot)")
 botname = "sdsu-stream-bot"
 unencrypted_password = getpass.getpass("Enter the bot password: ")
-hash = encrypt_password(unencrypted_password)
-print("Checking if password was encrypted successfully...")
 
-if(check_encrypted_password(unencrypted_password, hash)):
-    print("Password successfully encrypted.")
-else:
-    print("Uh oh, password was not encrypted correctly. Exiting...")
-    exit(1)
 
-# Bot Creation
-print("Connecting to Reddit...")
-reddit = praw.Reddit(client_id='oRDWYVEIfzVDAg',
-                     client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
-                     user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
-                     username=botname,
-                     password=unencrypted_password
-                     )
+def create_progress_bar(secs):
+    # 900 = 15 mins
+    # 1800 = 30 mins
+    # 3600 = 1 hour
+    # 7200 = 2 hours
+    # 43200 = 12 hours
+    # 86400 = 24 hours
+    bar = progressbar.ProgressBar(max_value=100)                
+    for i in range(secs):
+        time.sleep(1)
+        tmp = i / secs * 100
+        if ((tmp % 1) == 0):
+            tmpInt = int(tmp)
+            bar.update(tmpInt)
 
-# Check to see if post is in read only mode
-# We want it to be false
-print("Checking if Reddit praw obj is in read only mode...")
-if (reddit.read_only == True):
-    print("Uh oh, looks like Reddit is in read only mode. Exiting...")
-    exit(1)
-else:
-    print("Reddit is not in read only mode. Continuing...")
 
-check_if_game_today()
+def test_submission(reddit_username,reddit_password):
 
-# subreddit = reddit.subreddit('SecretSharedDawn')
-
-# for submission in subreddit.stream.submissions():
-#     if "test post" in submission.title:
-#         print("Submission found. Replying...")
-#         reply_text = "hello i am a bot!"
-#         submission.reply(reply_text)
-#         print("Replied to post.")
-#         break
-#     else:
-#          continue
-
-subreddit = reddit.subreddit('ncaaBBallStreams')
-
-for submission in subreddit.stream.submissions():
-    # do something with submission
-
-    if "San Diego St" in submission.title:
-        split_title = submission.title.split("vs")
-        reddit_title_left = split_title[0]
-        # print(reddit_title_left)
-        split_colon = reddit_title_left.split(":")
-        # print(split_colon[1])
-        reddit_team_name_left = split_colon[1].lstrip()
-        print(reddit_team_name_left)
-        r_vs = re.compile(r"^\W+")  
-        tmp_right = r_vs.sub("",split_title[1])
-        reddit_title_right = tmp_right.split()
-        reddit_team_name_right = reddit_title_right[0]
-        print(reddit_team_name_right)
-        # Get comments / create comment in submission
-        print("Submission found. Replying with link...")
-        game_title = reddit_team_name_left + "vs " + reddit_team_name_right
-        print(game_title)
-        reddit_team_left_formatted = reddit_team_name_left.translate(str.maketrans('', '', string.punctuation))
-        reddit_team_name_left_link = reddit_team_left_formatted.lower().strip().lstrip().replace(' ', '-')
-        print(reddit_team_name_left_link)
-        reddit_team_right_formatted = reddit_team_name_right.translate(str.maketrans('','', string.punctuation))
-        reddit_team_name_right_link = reddit_team_right_formatted.lower().strip().lstrip().replace(' ', '-')
-        
-        game_link = reddit_team_name_left_link + "-vs-" + reddit_team_name_right_link + "-1-online-stream"
-        print(game_link)
-        reply_text = "**HD** | [" + game_title + "](https://www.viprow.net/" + game_link +") | Clicks: 2 | English | Disable Adblock"
-        print(reply_text)
-        # submission.reply(reply_text)
-        break
+    hash = encrypt_password(reddit_password)
+    print("Checking if password was encrypted successfully...")
+    if(check_encrypted_password(reddit_password, hash)):
+        print("Password successfully encrypted.")
     else:
-        continue
+        print("Uh oh, password was not encrypted correctly. Exiting...")
+        exit(1)
+
+    # Bot Creation
+    print("Connecting to Reddit...")
+    reddit = praw.Reddit(client_id='oRDWYVEIfzVDAg',
+                        client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
+                        user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
+                        username=reddit_username,
+                        password=reddit_password
+                        )
+    subreddit = reddit.subreddit('SecretSharedDawn')
+
+    for submission in subreddit.stream.submissions():
+        if "test post" in submission.title:
+            print("Submission found. Replying...")
+            reply_text = "hello i am a bot!"
+            submission.reply(reply_text)
+            print("Replied to post.")
+            break
+        else:
+            continue
+
+
+def post_sdsu_stream(reddit_username,reddit_password):
+
+    hash = encrypt_password(reddit_password)
+    print("Checking if password was encrypted successfully...")
+    if(check_encrypted_password(reddit_password, hash)):
+        print("Password successfully encrypted.")
+    else:
+        print("Uh oh, password was not encrypted correctly. Exiting...")
+        exit(1)
+
+    # Bot Creation
+    print("Connecting to Reddit...")
+    reddit = praw.Reddit(client_id='oRDWYVEIfzVDAg',
+                        client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
+                        user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
+                        username=reddit_username,
+                        password=reddit_password
+                        )
+    # Check to see if post is in read only mode
+    # We want it to be false
+    print("Checking if Reddit praw obj is in read only mode...")
+    if (reddit.read_only == True):
+        print("Uh oh, looks like Reddit is in read only mode. Exiting...")
+        exit(1)
+    else:
+        print("Reddit is not in read only mode. Continuing...")       
+
+    if check_if_game_today():
+
+        subreddit = reddit.subreddit('ncaaBBallStreams')
+
+        for submission in subreddit.stream.submissions():
+            # do something with submission
+
+            if "San Diego St" in submission.title:
+                title = submission.title.split(":")
+                game_title_with_time = title[1]
+                game_title_with_time.lstrip()
+                game_title = game_title_with_time.split("[")
+                game_title_no_time = game_title[0]
+                game_title_no_time.strip()
+                # Get comments / create comment in submission
+                print("Submission found. Replying with link...")
+                print(game_title_no_time)
+                reply_text = "**HD** | ["+game_title_no_time+"](https://www.viprow.me/sports-basketball-online) | Clicks: 2 | English | Disable Adblock"
+                print(reply_text)
+                # submission.reply(reply_text)
+                print("Replied to submission. Going to sleep for 24 hours zzz...")
+                create_progress_bar(86400)
+                break
+            else:
+                continue
+
+    else:
+        print("Game not found! Going to sleep for 2 hours zzz...")
+        create_progress_bar(7200)
+
+
+while True:
+    try:
+        post_sdsu_stream(botname,unencrypted_password)
+    except Exception as e:
+        logging.basicConfig(filename='error_log.txt',level=logging.ERROR)
+        logging.error(e)
+        create_progress_bar(900)
+
