@@ -14,5 +14,10 @@ https://docs.python.org/3.8/library/getpass.html
 
 https://sportsreference.readthedocs.io/en/stable/index.html
 
+# python emojis because why not
+
+https://www.geeksforgeeks.org/python-program-to-print-emojis/
+
 # Where is the bot hosted?
+
 Going to eventually upload to AWS Lambda but until then it's on a server hosted by pythonanywhere.com
