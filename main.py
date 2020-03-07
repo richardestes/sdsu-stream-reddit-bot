@@ -10,7 +10,7 @@ import progressbar
 from security import encrypt_password, check_encrypted_password
 from sports import check_if_game_today
 
-# Bot Credential Setup 
+# Bot Credential Setup
 # botname = input("Enter bot user name: (sdsu-stream-bot)")
 botname = "sdsu-stream-bot"
 unencrypted_password = getpass.getpass("Enter the bot password: ")
@@ -23,7 +23,7 @@ def create_progress_bar(secs):
     # 7200 = 2 hours
     # 43200 = 12 hours
     # 86400 = 24 hours
-    bar = progressbar.ProgressBar(max_value=100)                
+    bar = progressbar.ProgressBar(max_value=100)
     for i in range(secs):
         time.sleep(1)
         tmp = i / secs * 100
@@ -32,7 +32,7 @@ def create_progress_bar(secs):
             bar.update(tmpInt)
 
 
-def test_submission(reddit_username,reddit_password):
+def test_submission(reddit_username, reddit_password):
 
     hash = encrypt_password(reddit_password)
     print("Checking if password was encrypted successfully...")
@@ -45,11 +45,11 @@ def test_submission(reddit_username,reddit_password):
     # Bot Creation
     print("Connecting to Reddit...")
     reddit = praw.Reddit(client_id='oRDWYVEIfzVDAg',
-                        client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
-                        user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
-                        username=reddit_username,
-                        password=reddit_password
-                        )
+                         client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
+                         user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
+                         username=reddit_username,
+                         password=reddit_password
+                         )
     subreddit = reddit.subreddit('SecretSharedDawn')
 
     for submission in subreddit.stream.submissions():
@@ -63,7 +63,7 @@ def test_submission(reddit_username,reddit_password):
             continue
 
 
-def post_sdsu_stream(reddit_username,reddit_password):
+def post_sdsu_stream(reddit_username, reddit_password):
 
     hash = encrypt_password(reddit_password)
     print("Checking if password was encrypted successfully...\U0001F928")
@@ -76,11 +76,11 @@ def post_sdsu_stream(reddit_username,reddit_password):
     # Bot Creation
     print("Seeing if we can connect to reddit...\U0001F914")
     reddit = praw.Reddit(client_id='oRDWYVEIfzVDAg',
-                        client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
-                        user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
-                        username=reddit_username,
-                        password=reddit_password
-                        )
+                         client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
+                         user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
+                         username=reddit_username,
+                         password=reddit_password
+                         )
     # Check to see if post is in read only mode
     # We want it to be false
     print("Wow we connected to reddit awesome")
@@ -89,7 +89,7 @@ def post_sdsu_stream(reddit_username,reddit_password):
         print("Uh oh, looks like Reddit is in read only mode. Exiting...\n")
         exit(1)
     else:
-        print("Reddit is not in read only mode. Continuing...\n")       
+        print("Reddit is not in read only mode. Continuing...\n")
 
     if check_if_game_today():
 
@@ -108,10 +108,12 @@ def post_sdsu_stream(reddit_username,reddit_password):
                 # Get comments / create comment in submission
                 print("Submission found. Replying with link...")
                 print(game_title_no_time)
-                reply_text = "**HD** | ["+game_title_no_time+"](https://www.viprow.me/sports-basketball-online) | Clicks: 2 | English | Disable Adblock"
+                reply_text = "**HD** | ["+game_title_no_time + \
+                    "](https://www.viprow.me/sports-basketball-online) | Clicks: 2 | English | Disable Adblock"
                 print(reply_text)
                 # submission.reply(reply_text)
-                print("Replied to submission. \U0001F60D My job here is done. Going to sleep for 24 hours zzz...\U0001F634 \n")
+                print(
+                    "Replied to submission. \U0001F60D My job here is done. Going to sleep for 24 hours zzz...\U0001F634 \n")
                 create_progress_bar(86400)
                 break
             else:
@@ -124,9 +126,10 @@ def post_sdsu_stream(reddit_username,reddit_password):
 
 while True:
     try:
-        post_sdsu_stream(botname,unencrypted_password)
-    except Exception as e: #probably an APIException error
-        logging.basicConfig(filename='error_log.txt',level=logging.ERROR)
+        # post_sdsu_stream(botname,unencrypted_password)
+        test_submission(botname, unencrypted_password)
+        create_progress_bar(900)
+    except Exception as e:  # probably an APIException error
+        logging.basicConfig(filename='error_log.txt', level=logging.ERROR)
         logging.error(e)
         create_progress_bar(900)
-

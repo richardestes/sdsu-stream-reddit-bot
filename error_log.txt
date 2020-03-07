@@ -14,3 +14,4 @@ ERROR:root:name 'tmpInt' is not defined
 ERROR:root:local variable 'tmpInt' referenced before assignment
 ERROR:root:Value 11 is out of range, should be between 0 and 10
 ERROR:root:invalid_grant error processing request
+ERROR:root:__init__() got an unexpected keyword argument 'max_value'
