@@ -21,3 +21,7 @@ https://www.geeksforgeeks.org/python-program-to-print-emojis/
 # Where is the bot hosted?
 
 Going to eventually upload to AWS Lambda but until then it's on a server hosted by pythonanywhere.com
+
+# Resources
+
+[PythonAnywhere - Add Environment Variables](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/)
