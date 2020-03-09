@@ -11,7 +11,6 @@ from security import encrypt_password, check_encrypted_password
 from sports import check_if_game_today
 
 # Bot Credential Setup
-# botname = input("Enter bot user name: (sdsu-stream-bot)")
 botname = "sdsu-stream-bot"
 unencrypted_password = getpass.getpass("Enter the bot password: ")
 
@@ -23,6 +22,7 @@ def create_progress_bar(secs):
     # 7200 = 2 hours
     # 43200 = 12 hours
     # 86400 = 24 hours
+    print('Sleeping for ' + str(secs) + ' seconds...')
     bar = progressbar.ProgressBar(max_value=100)
     for i in range(secs):
         time.sleep(1)
@@ -111,7 +111,7 @@ def post_sdsu_stream(reddit_username, reddit_password):
                 reply_text = "**HD** | ["+game_title_no_time + \
                     "](https://www.viprow.me/sports-basketball-online) | Clicks: 2 | English | Disable Adblock"
                 print(reply_text)
-                # submission.reply(reply_text)
+                submission.reply(reply_text)
                 print(
                     "Replied to submission. \U0001F60D My job here is done. Going to sleep for 24 hours zzz...\U0001F634 \n")
                 create_progress_bar(86400)
@@ -126,8 +126,8 @@ def post_sdsu_stream(reddit_username, reddit_password):
 
 while True:
     try:
-        # post_sdsu_stream(botname,unencrypted_password)
-        test_submission(botname, unencrypted_password)
+        post_sdsu_stream(botname, unencrypted_password)
+        # test_submission(botname, unencrypted_password)
         create_progress_bar(900)
     except Exception as e:  # probably an APIException error
         logging.basicConfig(filename='error_log.txt', level=logging.ERROR)
