@@ -8,6 +8,7 @@ import logging
 import math
 import progressbar
 from security import encrypt_password, check_encrypted_password
+from sports import check_if_game_today
 
 # Bot Credential Setup
 botname = "sdsu-stream-bot"
