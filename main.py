@@ -18,8 +18,8 @@ reddit_client_secret = ""
 
 
 def setup_env_variables():
-    reddit_client_id = os.environ['REDDIT_CLIENT_ID']
-    reddit_client_secret = os.environ['REDDIT_CLIENT_SECRET']
+    reddit_client_id = os.environ['REDDIT_STREAM_CLIENT_ID']
+    reddit_client_secret = os.environ['REDDIT_STREAM_CLIENT_SECRET']
 
 
 def create_progress_bar(secs):
