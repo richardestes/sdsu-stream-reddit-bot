@@ -13,6 +13,13 @@ from sports import check_if_game_today
 # Bot Credential Setup
 botname = "sdsu-stream-bot"
 unencrypted_password = getpass.getpass("Enter the bot password: ")
+reddit_client_id = ""
+reddit_client_secret = ""
+
+
+def setup_env_variables():
+    reddit_client_id = os.environ['REDDIT_CLIENT_ID']
+    reddit_client_secret = os.environ['REDDIT_CLIENT_SECRET']
 
 
 def create_progress_bar(secs):
@@ -44,8 +51,8 @@ def test_submission(reddit_username, reddit_password):
 
     # Bot Creation
     print("Connecting to Reddit...")
-    reddit = praw.Reddit(client_id='oRDWYVEIfzVDAg',
-                         client_secret='DkfD4aB3VvrXExaJbSALR_hCmlc',
+    reddit = praw.Reddit(client_id=reddit_client_id,
+                         client_secret=reddit_client_secret,
                          user_agent='<console:ncaa_stream_app:0.0.1 (by /u/sdsu-stream-bot)>',
                          username=reddit_username,
                          password=reddit_password
